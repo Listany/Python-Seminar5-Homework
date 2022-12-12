@@ -1,12 +1,18 @@
 # Крестики-нолики
 
 def correct_move(move, cell_test): # проверка правильности указания координат хода
-    if len(move) != 2: return False      
-    elif not move[0].isdigit() and not move[1].isdigit(): return False
-    #elif isinstance(move[0], float)  or isinstance(move[1], float): return False
-    elif int(move[0]) < 0 and int(move[0]) > 2: return False
-    elif int(move[1]) < 0 and int(move[1]) > 2: return False
-    elif cell_test[int(move[0])][int(move[1])] != '*': return False 
+    if len(move) != 2: 
+        return False      
+    elif not move[0].isdigit() and not move[1].isdigit(): 
+        return False
+    elif isinstance(move[0], float) == True  or isinstance(move[1], float) == True: 
+        return False
+    elif int(move[0]) < 0 or int(move[0]) > 2: 
+        return False
+    elif int(move[1]) < 0 or int(move[1]) > 2: 
+        return False
+    elif cell_test[int(move[0])][int(move[1])] != '*': 
+        return False 
     else:
         return True
 
@@ -32,30 +38,31 @@ def check_end (cell_test): # проверка на выигрыш
     
 
 
-cell = [["*" for j in range(3)] for i in range(3)]
+
 counter = 0
 
 while True:
-    player_1 = input("Первый игрок - ведите координаты хода через пробел - строку и столбец: ").split()
-    while correct_move(player_1, cell)  != True:  
-        print_cell(cell)
-        player_1 = input("Первый игрок! Внимательнее! Клетка вне поля или занята! - ведите координаты хода через пробел - строку и столбец: ").split()
+    print_cell(cell)
+    while True:
+        player_1 = input("Первый игрок - ведите координаты хода через пробел - строку и столбец: ").split()
         if correct_move(player_1, cell):
-            cell[int(player_1[0])][int(player_1[1])] = 1   
+            break
+        else:
+            print('Неверный ввод!')        
     cell[int(player_1[0])][int(player_1[1])] = 1
     print_cell(cell)
-    
-    if check_end(cell) == True: 
+
+    if check_end(cell) == True:
         counter += 1
         break
-    player_2 = input("Второй игрок - ведите координаты хода через пробел - строку и столбец: ").split()
-    while correct_move(player_2, cell)  != True:    
-        player_2 = input("Второй игрок! Внимательнее! Клетка вне поля или занята! - ведите координаты хода через пробел - строку и столбец: ").split()
+    while True:
+        player_2 = input("Второй игрок - ведите координаты хода через пробел - строку и столбец: ").split()
         if correct_move(player_2, cell):
-            cell[int(player_2[0])][int(player_2[1])] = 2  
+            break
+        else:
+            print('Неверный ввод!')    
     cell[int(player_2[0])][int(player_2[1])] = 2
-    print_cell(cell)
-        
+
     if check_end(cell) == True: break
 
 if counter == 0:
@@ -63,4 +70,3 @@ if counter == 0:
 else:
     print("Ура! Победил ПЕРВЫЙ игрок!")
 print_cell(cell)
-
